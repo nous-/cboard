@@ -31,7 +31,10 @@ export class LanguageProvider extends Component {
 
   componentWillMount() {
     const { lang: propsLang, platformLangs, setLangs, changeLang } = this.props;
+    console.log(platformLangs);
     const supportedLangs = this.getSupportedLangs(platformLangs);
+    supportedLangs.push('sr-SP');
+    supportedLangs.push('hr-HR');
     const lang = propsLang || this.getDefaultLang(platformLangs);
 
     setLangs(supportedLangs);

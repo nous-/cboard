@@ -55,13 +55,18 @@ function speechProviderReducer(state = initialState, action) {
         }
       };
     case CHANGE_LANG:
+      let vu = "Google US English";
+      if (action.lang !== 'hr-HR' &&
+        action.lang !== 'sr-SP') {
+        vu = state.voices.find(voice => voice.lang === action.lang)
+          .voiceURI
+      }
       return {
         ...state,
         options: {
           ...state.options,
           lang: action.lang,
-          voiceURI: state.voices.find(voice => voice.lang === action.lang)
-            .voiceURI
+          voiceURI: vu
         }
       };
     case CHANGE_PITCH:
