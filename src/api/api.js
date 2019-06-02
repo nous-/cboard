@@ -328,6 +328,23 @@ class API {
 
     return data;
   }
+
+  async tts(text, lang, pitch) {
+    const authToken = getAuthToken();
+    const headers = {
+      Authorization: `Bearer ${authToken}`
+    };
+
+    const { data } = await this.axiosInstance.post(`/tts`, {
+      query: text,
+      language: lang,
+      speed: pitch
+    }, {
+      headers
+    });
+    return data;
+  }
+
 }
 
 const API_INSTANCE = new API({});

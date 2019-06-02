@@ -1,4 +1,5 @@
 import { normalizeLanguageCode } from '../../i18n';
+import API from '../../api';
 
 const synth = window.speechSynthesis;
 let voices = [];
@@ -61,19 +62,31 @@ const tts = {
     synth.cancel();
   },
 
-  speak(text, { voiceURI, pitch = 1, rate = 1, volume = 1, onend }) {
-    this.getVoiceByVoiceURI(voiceURI).then(voice => {
-      const msg = new SpeechSynthesisUtterance(text);
-      msg.voice = voice;
-      msg.name = voice.name;
-      msg.lang = voice.lang;
-      msg.voiceURI = voice.voiceURI;
-      msg.pitch = pitch;
-      msg.rate = rate;
-      msg.volume = volume;
-      msg.onend = onend;
-      synth.speak(msg);
-    });
+  async playAudio(text, lang, pitch) {
+    let audio = new Audio();
+    const url = await API.tts(text, lang.substring(0, 2), pitch);
+
+    audio.src = url;
+    audio.play();
+  },
+
+  speak(text, { voiceURI, useApiTTS, lang, pitch = 1, rate = 1, volume = 1, onend }) {
+    if (useApiTTS) {
+      this.playAudio(text, lang, pitch);
+    } else {
+      this.getVoiceByVoiceURI(voiceURI).then(voice => {
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.voice = voice;
+        msg.name = voice.name;
+        msg.lang = voice.lang;
+        msg.voiceURI = voice.voiceURI;
+        msg.pitch = pitch;
+        msg.rate = rate;
+        msg.volume = volume;
+        msg.onend = onend;
+        synth.speak(msg);
+      });
+    }
   }
 };
 

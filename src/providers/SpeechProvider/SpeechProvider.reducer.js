@@ -17,6 +17,7 @@ const initialState = {
   options: {
     lang: '',
     voiceURI: null,
+    useApiTTS: false,
     pitch: 1.0,
     rate: 1.0,
     volume: 1
@@ -60,13 +61,16 @@ function speechProviderReducer(state = initialState, action) {
         action.lang !== 'sr-SP') {
         vu = state.voices.find(voice => voice.lang === action.lang)
           .voiceURI
-      }
+      } 
       return {
         ...state,
         options: {
           ...state.options,
           lang: action.lang,
-          voiceURI: vu
+          voiceURI: vu,
+          useApiTTS: (action.lang === 'hr-HR')
+            ? true
+            : false
         }
       };
     case CHANGE_PITCH:
