@@ -56,7 +56,7 @@ function speechProviderReducer(state = initialState, action) {
         }
       };
     case CHANGE_LANG:
-      let vu = "US English";
+      let vu = "Google US English";
       if (action.lang !== 'hr-HR' &&
         action.lang !== 'sr-SP') {
         vu = state.voices.find(voice => voice.lang === action.lang)
