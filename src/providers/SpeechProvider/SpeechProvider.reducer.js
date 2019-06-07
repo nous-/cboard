@@ -68,7 +68,7 @@ function speechProviderReducer(state = initialState, action) {
           ...state.options,
           lang: action.lang,
           voiceURI: vu,
-          useApiTTS: (action.lang === 'hr-HR')
+          useApiTTS: (action.lang === 'hr-HR' || action.lang === 'sr-SP')
             ? true
             : false
         }
