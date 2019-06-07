@@ -67,6 +67,7 @@ const tts = {
       let audio = new Audio();
       const url = await API.tts(text, lang.substring(0, 2), pitch);
       audio.src = url;
+      audio.addEventListener('ended', onend)
       audio.play();
     } else {
       this.getVoiceByVoiceURI(voiceURI).then(voice => {
