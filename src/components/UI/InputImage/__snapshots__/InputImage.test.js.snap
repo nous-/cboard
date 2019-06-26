@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputImage tests default renderer 1`] = `
+<InputImage
+  intl={
+    Object {
+      "formatMessage": [Function],
+    }
+  }
+  onChange={[Function]}
+/>
+`;
