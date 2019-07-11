@@ -104,10 +104,12 @@
       "!src/common/test_utils.js",
       "!src/components/**/index.js",
       "!src/providers/**/index.js",
-      "!src/components/**/*.constants.js",
       "!src/components/**/*.messages.js",
       "!src/components/**/*.container.js",
-      "!src/components/**/*.helpers.js"
+      "!src/components/**/*.helpers.js",
+      "!src/components/Board/SymbolSearch/SymbolSearch.component.js",
+      "!src/components/Board/TileEditor/TileEditor.component.js",
+      "!src/registerServiceWorker.js"
     ]
   },
   "scripts": {

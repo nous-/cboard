@@ -14,19 +14,30 @@ jest.mock('./FullScreenButton.messages', () => {
       id: 'cboard.components.FullScreenButton.exitFullscreen',
       defaultMessage: 'Exit full screen'
     }
-  }
+  };
 });
 
 describe('FullScreenButton tests', () => {
   test('default renderer', () => {
-    shallowMatchSnapshot(<FullScreenButton onClick={() => { }} />);
+    shallowMatchSnapshot(<FullScreenButton onClick={() => {}} />);
   });
   test('on buttton click', () => {
-    const wrapper = mount(shallow(<FullScreenButton disabled={false} />).get(0));
+    const wrapper = mount(
+      shallow(<FullScreenButton disabled={false} />).get(0)
+    );
     wrapper.simulate('click');
     expect(wrapper.state().fullscreen).toEqual(true);
     wrapper.simulate('click');
     expect(wrapper.state().fullscreen).toEqual(false);
   });
-
+  test('on buttton click', () => {
+    global.window.document.requestFullscreen = jest.fn();
+    const wrapper = mount(
+      shallow(<FullScreenButton disabled={false} />).get(0)
+    );
+    wrapper.simulate('click');
+    expect(wrapper.state().fullscreen).toEqual(true);
+    wrapper.simulate('click');
+    expect(wrapper.state().fullscreen).toEqual(false);
+  });
 });

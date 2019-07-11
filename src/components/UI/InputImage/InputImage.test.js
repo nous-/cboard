@@ -3,6 +3,9 @@ import { shallowMatchSnapshot } from '../../../common/test_utils';
 import { mount, shallow } from 'enzyme';
 import InputImage from './InputImage.component';
 
+jest.mock('browser-image-resizer');
+jest.mock('../../../api/api');
+
 jest.mock('./InputImage.messages', () => {
   return {
     uploadImage: {
@@ -13,25 +16,25 @@ jest.mock('./InputImage.messages', () => {
 });
 
 describe('InputImage tests', () => {
-  test('default renderer', () => {
-    shallowMatchSnapshot(<InputImage onChange={() => {}} />);
+  test('default render ', () => {
+    const onChange = jest.fn();
+    const wrapper = mount(<InputImage disabled={false} onChange={onChange} />);
+    expect(wrapper).toMatchSnapshot();
   });
-
   test('on buttton click', () => {
-    const wrapper = mount(
-      shallow(<InputImage disabled={false} onChange={() => {}} />).get(0)
-    );
-    wrapper.simulate('click');
-    expect(wrapper.state().loading).toEqual(false);
-  });
-  test('on buttton click login user', () => {
-    const props = {
-      onChange: () => { },
-      intl: {},
-      user: { email: 'my@my.com' }
+    const onChange = jest.fn();
+    const event = {
+      target: {
+        files: [new File(['foo'], 'foo.txt')]
+      }
     };
-    const wrapper = mount(shallow(<InputImage {...props} />).get(0));
-    wrapper.simulate('click');
-    expect(wrapper.state().loading).toEqual(false);
+    const wrapper = mount(
+      <InputImage
+        user={{ email: 'test' }}
+        disabled={false}
+        onChange={onChange}
+      />
+    );
+    wrapper.find('input').prop('onChange')(event);
   });
 });
